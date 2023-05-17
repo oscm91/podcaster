@@ -1,7 +1,7 @@
 const fecthPopular = () => {
   // Realiza una solicitud fetch a la API de iTunes para obtener los podcasts populares
   return fetch(
-    "https://cors-anywhere.herokuapp.com/https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
+    "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json"
   )
     .then((response) => response.json()) // Convierte la respuesta en formato JSON
     .then((data) => {

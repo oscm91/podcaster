@@ -1,10 +1,6 @@
 const fetchEpisodes = (podcastId) => {
   // Realiza una solicitud fetch a la API de iTunes utilizando la URL con el podcastId proporcionado
-  return fetch(
-    `https://api.allorigins.win/get?url=${encodeURIComponent(
-      `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=100`
-    )}`
-  )
+  return fetch(`https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=100`)
     .then((response) => response.json()) // Convierte la respuesta en formato JSON
     .then((data) => {
       const podcastInfo = JSON.parse(data.contents)?.results; // Obtiene la información del podcast de los datos
