@@ -16,7 +16,7 @@ function Header() {
       {/* Muestra un indicador de carga si loadingContext.loading es verdadero */}
       {loadingContext.loading && (
         <span className="w-10 h-10 inline-block relative">
-          <span className="absolute top-0 left-0 w-full h-full bg-main animate-loader"></span>
+          <span className="absolute overflow-hidden rounded-full top-0 left-0 w-full h-full bg-main animate-loader"></span>
         </span>
       )}
     </header>

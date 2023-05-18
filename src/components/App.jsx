@@ -80,7 +80,7 @@ function App() {
 
   return (
     <Loading.Provider value={{ loading: loading, setLoading: setLoading }}>
-      <div>
+      <div className="p-16">
         <Header />
         <Routes>
           <Route

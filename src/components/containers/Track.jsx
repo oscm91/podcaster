@@ -11,7 +11,7 @@ const Track = ({ episodeFound }) => {
   const { name, description, track } = episode;
 
   return (
-    <section className="p-4 mx-5 shadow-md">
+    <section className="p-4 mx-5 shadow-md w-4/5">
       {/* Renderiza el título del episodio */}
       <h2 className="font-bold text-xl pb-4">{name}</h2>
 

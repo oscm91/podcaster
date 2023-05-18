@@ -41,7 +41,7 @@ function EpisodesList({ episodes }) {
   ));
 
   return (
-    <section className="mx-5">
+    <section className="mx-5 w-4/5">
       {/* Título y conteo de episodios */}
       <h2 className="font-bold text-3xl p-5 shadow-md">
         Episodes: {episodes.length}
