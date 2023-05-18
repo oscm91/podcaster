@@ -1,65 +1,59 @@
-import { Link, useParams } from "react-router-dom";
-import { useContext } from "react";
-import { Loading } from "../../contexts/Loading";
-import { dateFormat } from "../../utils/dateFormat";
-import { time } from "../../utils/time";
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import { BrowserRouter } from 'react-router-dom';
+import { Loading } from "../../../contexts/Loading.js";
+import EpisodesList from '../EpisodesList';
 
-function EpisodesList({ episodes }) {
-  // Obtiene los parámetros de la URL utilizando el hook useParams
-  const params = useParams();
+describe('EpisodesList component', () => {
+  const episodes = [
+    {
+      id: 1,
+      name: 'Episode 1',
+      date: '2023-05-01',
+      duration: 3600,
+    },
+    {
+      id: 2,
+      name: 'Episode 2',
+      date: '2023-05-02',
+      duration: 2700,
+    },
+  ];
 
-  // Obtiene el contexto de carga utilizando el hook useContext
-  const loadingContext = useContext(Loading);
+  test('renders episodes list correctly', () => {
+    render(
+        <BrowserRouter>
+          <Loading.Provider value={{ loading: false, setLoading: jest.fn() }}>
+            <EpisodesList episodes={episodes} />
+          </Loading.Provider>
+        </BrowserRouter>
+    );
 
-  // Mapea los episodios y los renderiza como una lista
-  const episode = episodes.map((episode, i) => (
-    <ul
-      key={episode.id}
-      className={`grid grid-cols-3 gap-20 m-0 py-2.5 border-solid border-b border-gray-300 ${
-        i % 2 === 0 ? "" : "bg-gray-200"
-      }`}
-    >
-      <li>
-        {/* Enlace al detalle del episodio */}
-        <Link
-          to={`/podcast/${params.podcastId}/episode/${episode.id}`}
-          className="no-underline text-blue-500"
-          onClick={() => loadingContext.setLoading(true)}
-        >
-          {episode.name}
-        </Link>
-      </li>
-      <li className="text-center">
-        {/* Formatea la fecha del episodio */}
-        {dateFormat(episode.date)}
-      </li>
-      <li className="text-center">
-        {/* Convierte la duración del episodio */}
-        {time(episode.duration)}
-      </li>
-    </ul>
-  ));
+    const titleElement = screen.getByText('Episodes: 2');
+    const headerElements = screen.getAllByRole('listitem');
+    const episodeElements = screen.getAllByRole('link');
 
-  return (
-    <section className="mx-5">
-      {/* Título y conteo de episodios */}
-      <h2 className="font-bold text-3xl p-5 shadow-md">
-        Episodes: {episodes.length}
-      </h2>
+    expect(titleElement).toBeInTheDocument();
+    expect(headerElements.length).toBe(9); // Three header columns
+    expect(episodeElements.length).toBe(2); // Two episodes
 
-      {/* Contenedor de episodios */}
-      <article className="mt-12 grid gap-0 p-5 shadow-md">
-        {/* Encabezado de la lista de episodios */}
-        <ul className="grid grid-cols-3 gap-20 font-bold pb-2.5 border-solid border-b-2 border-gray-300">
-          <li>Title</li>
-          <li className="text-center">Date</li>
-          <li className="text-center">Duration</li>
-        </ul>
-        {/* Renderiza la lista de episodios o muestra un mensaje de carga */}
-        {!loadingContext.loading ? episode : "Cargando lista de episodios..."}
-      </article>
-    </section>
-  );
-}
+    const firstEpisodeLink = episodeElements[0];
+    fireEvent.click(firstEpisodeLink);
 
-export default EpisodesList;
+    // Assert any behavior or navigation related to the link click
+  });
+
+  test('displays loading message when loading is true', () => {
+    render(
+        <BrowserRouter>
+          <Loading.Provider value={{ loading: true, setLoading: jest.fn() }}>
+            <EpisodesList episodes={episodes} />
+          </Loading.Provider>
+        </BrowserRouter>
+    );
+
+    const loadingMessage = screen.getByText('Cargando lista de episodios...');
+    expect(loadingMessage).toBeInTheDocument();
+  });
+});

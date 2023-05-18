@@ -3,6 +3,11 @@ import ls from "../../utils/storage.js";
 const Track = ({ episodeFound }) => {
   // Obtiene el objeto episode de los props o del almacenamiento local
   const episode = episodeFound || ls.get("episodeFound");
+
+  if(!episode) {
+      return null;
+  }
+
   const { name, description, track } = episode;
 
   return (

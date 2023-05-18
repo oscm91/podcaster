@@ -3,7 +3,7 @@ const fetchEpisodes = (podcastId) => {
   return fetch(`https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=100`)
     .then((response) => response.json()) // Convierte la respuesta en formato JSON
     .then((data) => {
-      const podcastInfo = JSON.parse(data.contents)?.results; // Obtiene la información del podcast de los datos
+      const podcastInfo = data?.results; // Obtiene la información del podcast de los datos
       const dataClean = podcastInfo.map((episode) => {
         // Mapea y transforma los datos de cada episodio
         const {
@@ -32,6 +32,7 @@ const fetchEpisodes = (podcastId) => {
     })
     .catch((error) => {
       console.error("Error fetching podcast episodes:", error); // Maneja el error en caso de que ocurra
+      return Promise.resolve([]);
     });
 };
 

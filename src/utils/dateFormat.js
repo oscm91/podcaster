@@ -3,7 +3,7 @@ export const dateFormat = (date) => {
   const clearDate = new Date(date);
 
   // Formatea y devuelve la fecha en el formato "dd/mm/yyyy"
-  return `${clearDate.getDate()}/${
+  return `${clearDate.getDate() + 1}/${
     clearDate.getMonth() + 1
   }/${clearDate.getFullYear()}`;
 };
