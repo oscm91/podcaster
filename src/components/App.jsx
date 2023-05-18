@@ -11,7 +11,7 @@ import { matchPath, Route, Routes, useLocation } from "react-router-dom";
 
 function App() {
   const [popularPodcasts, setPopularPodcasts] = useState(
-      ls.get("popularPodcastLs", [])
+    ls.get("popularPodcastLs", [])
   );
 
   const [loading, setLoading] = useState(true);
@@ -37,10 +37,10 @@ function App() {
   //Get podcastFound
 
   const podcastId =
-      podcastDataPath !== null ? podcastDataPath.params.podcastId : null;
+    podcastDataPath !== null ? podcastDataPath.params.podcastId : null;
 
   const podcastFound = popularPodcasts.find(
-      (podcast) => podcast.id === podcastId
+    (podcast) => podcast.id === podcastId
   );
 
   if (podcastFound) {
@@ -51,17 +51,17 @@ function App() {
   //Get episodeFound
 
   const episodeDataPath = matchPath(
-      "/podcast/:podcastId/episode/:episodeId",
-      pathname
+    "/podcast/:podcastId/episode/:episodeId",
+    pathname
   );
 
   const episodeId =
-      episodeDataPath !== null ? episodeDataPath.params.episodeId : null;
+    episodeDataPath !== null ? episodeDataPath.params.episodeId : null;
 
   const episodeFound =
-      episodes.length > 0
-          ? episodes.find((episode) => episode.id === episodeId)
-          : null;
+    episodes.length > 0
+      ? episodes.find((episode) => episode.id === episodeId)
+      : null;
 
   if (episodeFound) {
     ls.set("episodeFound", episodeFound);
@@ -79,33 +79,31 @@ function App() {
   }, [podcastId]);
 
   return (
-      <Loading.Provider
-          value={{ loading: loading, setLoading: setLoading }}
-      >
-        <div className="globalContainer">
-          <Header />
-          <Routes>
-            <Route
-                path="/podcaster/"
-                element={<Home popularPodcasts={popularPodcasts} />}
-            />
-            <Route
-                path="/podcast/:podcastId"
-                element={
-                  <PodcastDetails
-                      podcastFound={podcastFound}
-                      episodes={episodes}
-                      loadingUpdate={loadingUpdate}
-                  />
-                }
-            />
-            <Route
-                path="/podcast/:podcastId/episode/:episodeId"
-                element={<EpisodeDetails episodeFound={episodeFound} />}
-            />
-          </Routes>
-        </div>
-      </Loading.Provider>
+    <Loading.Provider value={{ loading: loading, setLoading: setLoading }}>
+      <div>
+        <Header />
+        <Routes>
+          <Route
+            path="/podcaster/"
+            element={<Home popularPodcasts={popularPodcasts} />}
+          />
+          <Route
+            path="/podcast/:podcastId"
+            element={
+              <PodcastDetails
+                podcastFound={podcastFound}
+                episodes={episodes}
+                loadingUpdate={loadingUpdate}
+              />
+            }
+          />
+          <Route
+            path="/podcast/:podcastId/episode/:episodeId"
+            element={<EpisodeDetails episodeFound={episodeFound} />}
+          />
+        </Routes>
+      </div>
+    </Loading.Provider>
   );
 }
 

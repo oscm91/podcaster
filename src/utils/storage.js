@@ -2,7 +2,7 @@ const get = (key, defaultValue) => {
   // Obtiene los datos del almacenamiento local correspondientes a la clave especificada
   const localStorageData = localStorage.getItem(key);
   // Si los datos son nulos, devuelve el valor predeterminado, de lo contrario, los analiza como JSON y los devuelve
-  if (localStorageData === null) {
+  if (localStorageData === null || localStorageData === undefined) {
     return defaultValue;
   } else {
     return JSON.parse(localStorageData);

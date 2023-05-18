@@ -10,7 +10,7 @@ const InfoPodcast = ({ podcastFound }) => {
     <section className="w-1/5 p-5 flex flex-col shadow-md">
       <div className="w-4/5 mx-auto">
         {/* Enlace a la página de detalles del podcast */}
-        <Link to={`/podcast/${podcastFound.id}`} className="infoPodcast__link">
+        <Link to={`/podcast/${podcastFound.id}`}>
           <img
             className="w-full"
             src={podcastFound.image}
@@ -21,7 +21,7 @@ const InfoPodcast = ({ podcastFound }) => {
       </div>
 
       {/* Enlace a la página de detalles del podcast */}
-      <Link to={`/podcast/${podcastFound.id}`} className="infoPodcast__link">
+      <Link to={`/podcast/${podcastFound.id}`}>
         <h2 className="font-bold pt-4">{podcastFound.title}</h2>
       </Link>
 
